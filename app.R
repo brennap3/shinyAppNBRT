@@ -1,8 +1,8 @@
 #
-# This is a Shiny web application. You can run the application by clicking
+# This is a Shinydashboard web application. You can run the application by clicking
 # the 'Run App' button above.
 #
-# Find out more about building applications with Shiny here:
+# Find out more about building dashboard applications with Shiny here:
 #
 #    http://shiny.rstudio.com/
 #
@@ -53,9 +53,12 @@ ui <- dashboardPage(
                             The plots are built using ggplot2, cast as a plotly object using ggplotly and displayed.
                             The total build time for the exercise was about 30 minutes.
                            "),
-                h4("The app was written originally as a shiny app and then converted to a shinydashboard. The code for the app is show below")        
-                
+                h4("The app was written originally as a shiny app and then converted to a shinydashboard. The code for the app is show below:"),        
+                h4("The radio buttons are used to choose which plotly plot object to display and the select inputs are used to choose which variable to display in the plotly plot."),
+                h4("Menu Items are used to select the different tabs, dashboard with the plot and related controls. Summary app with the details of the app"),
+                tags$a("link to shiny app on git",href="https://github.com/brennap3/shinyAppNBRT/blob/master/app.R")   
                 )
+                                
       )
     )
 )
@@ -74,17 +77,17 @@ server <- function(input, output) {
         mtcars, aes(x=!!input$variable,y=!!input$variable2,text=rownames(mtcars))) +
       geom_point() 
     
-    ##create plotly object from ggplot object
+    ##create plotly object from ggplot object with the lines
     plotyGG<-ggplotly(ggPlot1)
-    ##Create the
+    ##Create the the plotly object without the lines
     plotyGG2<-ggplotly(ggPlot2)
     
-    #display plotly object
+    #display plotly object choice baased on radio button
     print(
       if(input$line==1){plotyGG}
-      else if(input$line==2){plotyGG2}
-      else{plotyGG}
-    )
+        else if(input$line==2){plotyGG2}
+        else{plotyGG}
+      )
     
   })
   
